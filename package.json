@@ -1,0 +1,19 @@
+{
+  "name": "ipfs",
+  "version": "1.0.0",
+  "description": "Task to interact with the mobile app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Raj Prajapati",
+  "license": "ISC",
+  "dependencies": {
+    "@_koi/smartest": "^0.1.4",
+    "arweave": "^1.10.23",
+    "axios": "^0.26.1",
+    "body-parser": "^1.19.2",
+    "express": "^4.17.3",
+    "ipfs-http-client": "^56.0.1"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "name": "ipfs",
+  "votes": [],
+  "task": {
+    "open": 770649,
+    "close": 771369,
+    "proposedPayloads": [
+      {
+        "block": 770649,
+        "proposedData": [],
+        "isRanked": false
+      }
+    ]
+  },
+  "imageHashArray": [
+    {
+      "hash": "bvwjekbsbghghk",
+      "Creator": "finxI3rygo2rLJ58e2_6hY9rlqApe9U9T_CS_jjuFHY",
+      "voteCount": 0,
+      "date": "2022-03-03"
+    }
+  ],
+  "voting": [
+    {
+      "date": "2022-03-03",
+      "voters": []
+    },
+    {
+      "date": "2022-03-04",
+      "voters": []
+    },
+    {
+      "date": "2022-03-05",
+      "voters": []
+    },
+    {
+      "date": "2022-03-06",
+      "voters": []
+    }
+  ],
+  "executableId": "",
+  "koiiContract": "S2aB4jHaxSPlDzobOk3KTmAk1_N_rykgjRTKMii-KOY"
+}
