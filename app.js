@@ -1,24 +1,26 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const { create } = require("ipfs-http-client");
-var multer = require("multer");
-var upload = multer({ dest: "uploads/" });
 //const axios = require('axios').default;
-// async function ipfsClient() {
-//   let ipfs = await create({
-//     host: "ipfs.infura.io",
-//     port: 5001,
-//     protocol: "https",
-//   });
-//   return ipfs;
-// }
+async function ipfsClient() {
+  let ipfs = await create({
+    host: "ipfs.infura.io",
+    port: 5001,
+    protocol: "https",
+  });
+  return ipfs;
+}
 
 const app = express();
 
 app.use(bodyParser.json());
 
 app.post("/createNFT", async (req, res) => {
-  const cid = req.body.cid;
+  const wallet = req.body.wallet;
+  const nftMetaData = req.body.nftMetaData;
+
+  const nftUrl = "https://ipfs.io/ipfs/" + req.params.ID;
+
   // const wallet = req.body.wallet;
   // const nftMetaData = req.body.nftMetaData;
 
