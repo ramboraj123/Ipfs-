@@ -3,6 +3,12 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 const fetch = require("node-fetch");
 const path = require("path");
+const Arweave = require("arweave/node");
+const arweave = Arweave.init({
+  host: "arweave.net",
+  protocol: "https",
+  port: 443,
+});
 const { create } = require("ipfs-http-client");
 const { url } = require("inspector");
 const { json } = require("express/lib/response");
@@ -101,7 +107,7 @@ app.post("/createNFT", async (req, res) => {
       walletAddress: 1,
     },
     owners: {
-      1: json.stringify(walletAddress),
+      1: JSON.stringify(walletAddress),
     },
     maxSupply: 5,
     locked: [],
