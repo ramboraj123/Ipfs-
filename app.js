@@ -4,11 +4,16 @@ const fs = require("fs");
 const fetch = require("node-fetch");
 const path = require("path");
 const Arweave = require("arweave/node");
+const smartest = require("@_koi/smartest");
 const arweave = Arweave.init({
   host: "arweave.net",
   protocol: "https",
   port: 443,
 });
+const imageSrc = fs.readFileSync(`./image_contract.js`, "utf8");
+const imageContractId = "a1s2d3f45";
+const imageInitState = JSON.parse(fs.readFileSync(`./init_state_image.json`));
+smartest.writeContractState(imageContractId, imageInitState);
 const { create } = require("ipfs-http-client");
 const { url } = require("inspector");
 const { json } = require("express/lib/response");
@@ -38,11 +43,55 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.post("/cid", async (req, res) => {
+  const cid = req.body.cid;
+  //const walletPath = req.body.walletData;
+  // const walletAdd = req.body.walletAddress;
+  // const walletData = JSON.stringify(req.body.walletData);
+  const walletPath = req.body.walletPath;
+  // const walletData = JSON.stringify(req.body.walletData);
+
+  // fs.writeFile(
+  //   __dirname + "/tempfile/" + walletAdd,
+  //   walletData,
+  //   function (err) {
+  //     if (err) throw err;
+  //     console.log("File created succesfully");
+  //   }
+  // );
+
+  const wallet = JSON.parse(fs.readFileSync(walletPath));
+  const walletAddress = await arweave.wallets.jwkToAddress(wallet);
+  const upload_input = {
+    function: "upload",
+    hash: cid,
+  };
+  const upload_id = await smartest.interactWrite(
+    arweave,
+    imageSrc,
+    wallet,
+    upload_input,
+    smartest.readContractState(imageContractId),
+    walletAddress,
+    imageContractId
+  );
+
+  console.log(smartest.readContractState(imageContractId));
+
+  // fs.unlink(__dirname + "/tempfile/" + walletAddress, function () {
+  //   console.log("write operation complete.");
+  // });
+
+  res.status(200).json({ Result: "Request recorded" });
+});
+
 app.post("/downloadNFT", async (req, res) => {
   // const wallet = req.body.wallet;
   // const nftMetaData = req.body.nftMetaData;
 
-  const nftUrl = "https://ipfs.io/ipfs/" + req.params.ID;
+  const cid = req.body.cid;
+
+  const nftUrl = "https://ipfs.io/ipfs/" + cid;
   console.log("NFT URL", nftUrl);
   const imagepath = path.resolve(__dirname, "images", "output.png");
   const writer = fs.createWriteStream(imagepath);
@@ -57,7 +106,7 @@ app.post("/downloadNFT", async (req, res) => {
     writer.on("finish", resolve);
     writer.on("error", reject);
 
-    // res.status(200).json({ result: "true" });
+    res.status(200).json({ result: "true" });
   });
 
   // const wallet = req.body.wallet;
@@ -159,11 +208,18 @@ app.post("/createNFT", async (req, res) => {
         uploader.uploadedChunks + "/" + uploader.totalChunks
       );
     }
+    fs.unlink(__dirname + "/tempfile/" + walletAddress, function () {
+      console.log("write operation complete.");
+    });
     res.status(200).json({ Id: tx.id });
   } catch (err) {
     console.log("err-last", err);
     return false;
   }
+});
+
+app.post("/registerNFT", async (req, res) => {
+  // API to register the NFT for attention on arweave
 });
 
 app.listen(3000);

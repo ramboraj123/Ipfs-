@@ -9,14 +9,14 @@ async function main() {
   let ipfs = await create({
     host: "ipfs.infura.io",
     port: 5001,
-    protocol: "https"
+    protocol: "https",
   });
 
-  let data = fs.readFileSync("../../diagram/attention_diagram.jpg");
+  let data = fs.readFileSync("./diagram/attention_diagram.jpg");
 
   let options = {
     warpWithDirectory: false,
-    progress: (prog) => console.log(`Saved :${prog}`)
+    progress: (prog) => console.log(`Saved :${prog}`),
   };
   let result = await ipfs.add(data, options);
   console.log(result);
@@ -25,7 +25,7 @@ async function main() {
     port: 443,
     protocol: "https",
     timeout: 20000,
-    logging: false
+    logging: false,
   });
 
   const wallet = JSON.parse(fs.readFileSync(process.argv[2]));
@@ -39,12 +39,12 @@ async function main() {
 
   const upload_input = {
     function: "upload",
-    hash: result.path
+    hash: result.path,
   };
 
   const vote_input = {
     function: "vote",
-    vote: "yes"
+    vote: "yes",
   };
 
   const upload_id = await smartest.interactWrite(

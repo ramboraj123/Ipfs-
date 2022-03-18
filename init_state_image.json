@@ -1,17 +1,4 @@
 {
-  "name": "ipfs",
-  "votes": [],
-  "task": {
-    "open": 770649,
-    "close": 771369,
-    "proposedPayloads": [
-      {
-        "block": 770649,
-        "proposedData": [],
-        "isRanked": false
-      }
-    ]
-  },
   "imageHashArray": [
     {
       "hash": "bvwjekbsbghghk",
@@ -21,6 +8,10 @@
     }
   ],
   "voting": [
+    {
+      "date": "2022-03-18",
+      "voters": []
+    },
     {
       "date": "2022-03-03",
       "voters": []
@@ -37,7 +28,5 @@
       "date": "2022-03-06",
       "voters": []
     }
-  ],
-  "executableId": "",
-  "koiiContract": "S2aB4jHaxSPlDzobOk3KTmAk1_N_rykgjRTKMii-KOY"
+  ]
 }
